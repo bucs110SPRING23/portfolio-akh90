@@ -1,5 +1,4 @@
-shape = "pentagon"
-sides = 5
-print (360 % 5)
-
+shape = "megagon"
+sides = 1000000
+print (360/sides)
 
