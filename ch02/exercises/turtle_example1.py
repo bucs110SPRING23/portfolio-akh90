@@ -8,7 +8,7 @@ pen2.shape("turtle")
 pen.color ("purple")
 pen2.color ("orange")
 pen.speed (1)
-pen.speed (0)
+pen.speed (1) #speed is 1-10 with 1 the slowest. 0 is the fastest after 10
 
 
 
