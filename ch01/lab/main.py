@@ -33,6 +33,7 @@ print ("A pet for you:", (r2))
 r3 = ["hi there", "how are you", "you look nice", "69", "you look funny"]
 print (random.choice (r3)) #"message 4 you", r3)
 
+git add .
 
 
 
