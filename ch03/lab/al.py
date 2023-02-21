@@ -4,23 +4,28 @@ import math
 pygame.init()
 screen = pygame.display.set_mode()
 
-screen.fill ("blue")
+screen.fill ("cornflowerblue")
 pygame.display.flip()
-pygame.time.wait(1000)
+pygame.time.wait(200)
 
-#points = []
-#num_sides = 
-#side_length =
-#xpos = 
-#ypos = 
+shap_sides = [3, 4, 6, 20, 100, 360]
+for x in shap_sides:
+    points = []
+    num_sides = x
+    side_length = 200
+    xpos = 500
+    ypos = 300
 
-pygame.draw.polygon (screen, "black", [[100,100], [150,300], [100,200]])
-pygame.time.wait (1000)
-pygame.draw.polygon (screen, "black", [[700,200],[700, 300] , [550,300], [550,200]])
+    for _ in range (num_sides):
+        angle = 360/num_sides
+        radians = math.radians(angle * _)
+        x = xpos + side_length * math.cos(radians)
+        y = ypos + side_length * math.sin(radians)
+        points.append([x,y])
 
-#for _ in range (3):
-#    angle = 360/num_sides
-
-
-pygame.display.flip()
-pygame.time.wait (1000)
+      
+    pygame.draw.polygon (screen, "darkviolet", points)
+    pygame.time.wait (500)
+    pygame.display.flip()
+    screen.fill ("cornflowerblue")
+   
