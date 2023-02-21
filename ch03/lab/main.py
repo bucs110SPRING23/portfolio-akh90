@@ -27,6 +27,7 @@ michelangelo.goto(-100,20)
 leonardo.goto(-100,-20)
 
 for _ in range (3):
+    turtle.ontimer (30)
     leonardo.forward (random.randrange(1,10))
     michelangelo.forward (random.randrange(1,10))
     
@@ -53,7 +54,7 @@ pygame.time.wait(1000)
 
 pygame.draw.polygon (screen, "black", [[100,100], [150,300], [100,200]])
 pygame.time.wait (1000)
-pygame.draw.polygon (screen, "black", [[700,-200], [550,200], [500,100], [750, 300]])
+pygame.draw.polygon (screen, "black", [[700,200],[700, 300] , [550,300], [550,200]])
 #for _ in range (3):
 #    angle = 360/num_sides
 
