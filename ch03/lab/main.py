@@ -47,7 +47,7 @@ for i in range (10):
     dot = (x2,y2)
 
     if dot == in_circle:
-        pygame.draw.circle (screen, "white", (x2, y2), 5)
+        pygame.draw.circle (screen, "black", (x2, y2), 5)
     else:
         pygame.draw.circle (screen, "red", (x2, y2), 5)
 
