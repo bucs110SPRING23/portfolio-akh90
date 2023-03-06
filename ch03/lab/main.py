@@ -11,7 +11,7 @@ starting_point = [dimensions[0]-640, dimensions [1]-360]
 
 screen.fill ("cornflowerblue")
 pygame.display.flip()
-pygame.time.wait (500)
+pygame.time.wait (1000)
 
 #circle
 radius = 360
@@ -28,9 +28,7 @@ pygame.display.flip()
 #vert_line
 pygame.draw.line(screen, "black", ((dimensions[0]/2), (0)), ((dimensions[0]/2),(dimensions[1])), width=2)
 pygame.display.flip()
-
-
-pygame.time.wait(500)
+pygame.time.wait(1000)
 
 #part B
 x1 = 640
@@ -43,7 +41,12 @@ in_circle = distance_from_center <= dimensions[0]/2 #screen width
 
 #pygame.draw.circle (screen, "black", (x2, y2), 3)
 
-for i in range (10):
+numdarts = 10
+for i in range (numdarts):
+    x1 = 640
+    y1 = 360
+    x2 = random.randrange (0,1280)
+    y2 = random.randrange (0,720)
     dot = (x2,y2)
 
     if dot == in_circle:
@@ -53,5 +56,8 @@ for i in range (10):
 
 
 
+
+
+
 pygame.display.flip()
-pygame.time.wait(500)
+pygame.time.wait(1000)

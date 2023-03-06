@@ -35,7 +35,7 @@ dimensions = [(200, 350), (300,350)]
 pygame.draw.lines(screen, "black", True, dimensions, width = 10)
 
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
-text1 = my_font.render('k*ll me now', True, (0,0,255))
+text1 = my_font.render('i love you so much and ur the best', True, (0,0,255))
 screen.blit(text1, (100,100))
 
 
