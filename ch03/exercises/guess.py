@@ -11,9 +11,9 @@ for i in range (3):
         print("correct!", num)
         break
     elif guess < num:
-        print("oop too low!")
+        print("oops too low!")
     else:
-        print("oop too high!")
+        print("oops too high!")
 
 
 
