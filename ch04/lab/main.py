@@ -99,7 +99,7 @@ for i in range(num_rounds):
         color = (0, 0, 0)
     pygame.draw.circle(screen, color, (x2, y2), 10)
     pygame.display.update()
-    pygame.time.wait(1000)
+    pygame.time.wait(4000)
 
 screen.fill ("cornflowerblue")
 #winner nd loser
@@ -116,12 +116,12 @@ elif player2_score > player1_score:
     else:
         guess_result = "You guessed wrong!"
 
-text = font.render(winner, True, (0, 0, 0))
+text = font.render( winner, True, (0, 0, 0))
 text_rect = text.get_rect(center=(screen.get_width() // 2, 50))
 screen.blit(text, text_rect)
 
 pygame.display.flip()
-pygame.time.wait(1000)
+pygame.time.wait(2000)
 
 screen.fill ("cornflowerblue")
 
@@ -130,7 +130,7 @@ text_rect = text.get_rect(center=(screen.get_width() // 2, 50))
 screen.blit(text, text_rect)
 
 pygame.display.flip()
-pygame.time.wait(1000)
+pygame.time.wait(2000)
 
 screen.fill ("cornflowerblue")
 
@@ -139,4 +139,4 @@ text_rect = text.get_rect(center=(screen.get_width() // 2, 50))
 screen.blit(text, text_rect)
 
 pygame.display.flip()
-pygame.time.wait(1000)
+pygame.time.wait(2000)
