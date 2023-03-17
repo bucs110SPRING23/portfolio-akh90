@@ -35,12 +35,15 @@ x1 = 640
 y1 = 360
 x2 = random.randrange (0,1280)
 y2 = random.randrange (0,720)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
 distance_from_center = math.hypot(x2-x1, y2-y1)  #the distance formula
 in_circle = distance_from_center <= dimensions[0]/2 #screen width
 
 #pygame.draw.circle (screen, "black", (x2, y2), 3)
 
+center = (dimensions [0] // 2, dimensions [1] // 2)
 numdarts = 10
 for i in range (numdarts):
     x1 = 640
@@ -48,16 +51,20 @@ for i in range (numdarts):
     x2 = random.randrange (0,1280)
     y2 = random.randrange (0,720)
     dot = (x2,y2)
-
-    if dot == in_circle:
-        pygame.draw.circle (screen, "black", (x2, y2), 5)
+    if ((x2 - center[0])**2 + (y2 - center[1])**2)**0.5 <= 360:
+        color = BLACK
     else:
-        pygame.draw.circle (screen, "red", (x2, y2), 5)
+        color = RED
+    pygame.draw.circle(screen, color, dot, 10)
 
+    # Update the screen
+    pygame.display.update()
 
-
-
+    #if dot == in_circle:
+     #   pygame.draw.circle (screen, "black", (x2, y2), 5)
+    #else:
+     #   pygame.draw.circle (screen, "red", (x2, y2), 5)
 
 
 pygame.display.flip()
-pygame.time.wait(1000)
+pygame.time.wait(5000)
