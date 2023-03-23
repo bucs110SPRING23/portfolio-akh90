@@ -1,4 +1,6 @@
 import turtle
+import string 
+import random
 
 def my_cipher(text, shift):
     """
@@ -24,8 +26,10 @@ def my_cipher(text, shift):
     return result
 
 
+
+
 message = input("enter a message: ")
-shift = 5
+shift = random.randint(1,10)
 encrypted_message = my_cipher(message, shift)
 print(encrypted_message)
 
