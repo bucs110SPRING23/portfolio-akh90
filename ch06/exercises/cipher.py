@@ -1,7 +1,6 @@
-import turtle
-import string 
+#import turtle
+
 import random
-import json 
 
 def my_cipher(text, shift):
     """
