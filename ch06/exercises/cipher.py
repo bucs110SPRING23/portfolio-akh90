@@ -1,6 +1,7 @@
 import turtle
 import string 
 import random
+import json 
 
 def my_cipher(text, shift):
     """
@@ -12,6 +13,7 @@ def my_cipher(text, shift):
     return:
         :str = the encrypted message
     """
+    
 
     result = ""
     for char in text:
@@ -27,9 +29,12 @@ def my_cipher(text, shift):
 
 
 
-
-message = input("enter a message: ")
+#message = input("enter a message: ")
+message = "The quick brown fox jumps over the lazy dog"
 shift = random.randint(1,10)
 encrypted_message = my_cipher(message, shift)
-print(encrypted_message)
+
+with open("encrypted.txt", "w") as file:
+    file.write(encrypted_message)
+
 
