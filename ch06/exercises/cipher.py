@@ -34,7 +34,6 @@ message = "The quick brown fox jumps over the lazy dog"
 shift = random.randint(1,10)
 encrypted_message = my_cipher(message, shift)
 
-with open("encrypted.txt", "w") as file:
+with open("c:/Users/aakha/github-classroom/bucs110SPRING23/portfolio-akh90/ch06/exercises/encrypted.txt", "w") as file:
     file.write(encrypted_message)
-
-
+    file.close()
