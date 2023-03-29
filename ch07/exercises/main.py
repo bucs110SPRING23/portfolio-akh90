@@ -17,7 +17,7 @@
 # -object should do one thing
 # state: x,y,color
 #behavior: change_color, move
-
+"""
 #classes == Type
 import turtle
 
@@ -55,27 +55,74 @@ class Point:
         self.x = 0 #dot operator accesses instance variables of an object 
         self.y = 0
         self.color = ""
-"""""
+"""
 
 ###main.py
 import point
 import turtle
+import random 
+import pygame
 
-t = turtle.Turtle()
-w = turtle.Turtle()
-#p1 = point.Point()  #p1 is an instance of Point, Point is a class
-p1.x = 10
+pygame.init()
+display = pygame.display.set_mode()
 
-p1 = point.Point()  #p1 is an instance of Point, Point is a class
-p1.x = 5
+points = []
+for p in range (10):
+    x = random.randint (0,250)
+    y = random.randint(0,250)
+    p = point.Point(x,y)
+    p.random_color()
+    points.append(p)
 
-# state of p1(x=10, y=0, color="")
-# state of p2(x=5, y=0, color="")
+#p1 = point.LED(x=100, y=100)
 
-p1.color = "red"
-## state of p1(x=10, y=0, color="red")
-point.Point()
 
-"""""
+pygame.draw.circle(display, p.color, (p.rect.x, p.rect.y), p.radius)
 
+while True:
+
+    pygame.display.flip()
+
+
+
+
+# p2 = point.Point()
+
+# p1.xcoor = 10
+
+# print (p1.xcoor, p1.ycoor, p1.color, type(p1), id(p1) )
+# print (p2.xcoor, p2.ycoor, p2.color, type(p2), id(p2) )
+
+# points = []
+# for p in range(10):
+#     x = random.randint(0,250)
+#     y = random.randint(0,2500)
+#     points.append(point.Point(x,y))
+
+# t = turtle.Turtle()
+# for p in points:
+#     p.random_color()
+#     t.color(p.color)
+#     t.goto(p.xcoor, p.ycoor)
+
+# turtle.Screen().exitonclick()
+
+
+# """
+# t = turtle.Turtle()
+# w = turtle.Turtle()
+# #p1 = point.Point()  #p1 is an instance of Point, Point is a class
+# p1.x = 10
+
+# p1 = point.Point()  #p1 is an instance of Point, Point is a class
+# p1.x = 5
+
+# # state of p1(x=10, y=0, color="")
+# # state of p2(x=5, y=0, color="")
+
+# p1.color = "red"
+# ## state of p1(x=10, y=0, color="red")
+# point.Point()
+
+# """
 
