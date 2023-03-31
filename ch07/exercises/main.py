@@ -65,7 +65,7 @@ import pygame
 
 pygame.init()
 display = pygame.display.set_mode()
-
+""""
 points = []
 for p in range (10):
     x = random.randint (0,250)
@@ -82,9 +82,42 @@ pygame.draw.circle(display, p.color, (p.rect.x, p.rect.y), p.radius)
 while True:
 
     pygame.display.flip()
+"""
 
 
+def mainloop(display):
+    points = []
+    #mainloop
+    while True:
+        #eventloop, goes through for the number of points 
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                point_deleted = False
+                for i,p in enumerate(points):
+                    if p.rect.collidepoint(event.pos):
+                        del points[1]
+                        point_deleted = True   #only set to true if a point is deleted 
+                if not point_deleted:
+                    p= point.Point(event.pos[0], event.pos[1])
+                    points.append(p)
+                
 
+        #display updates
+        display.fill("white")
+
+        for p in points:
+            pygame.draw.circle(display, p.color, p.rect.center, p.rect.h / 2)
+
+
+        #show display
+        pygame.display.flip()
+
+def main():
+    pygame.init()
+    display = pygame.display.set_mode()
+    mainloop()
+
+main()
 
 # p2 = point.Point()
 
