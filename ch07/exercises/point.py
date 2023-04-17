@@ -21,7 +21,6 @@ class Point:
         #self ties the data to the objects scope
         self.on = True
         self.rect = pygame.Rect(abs(x), abs(y), size, size)
-
         self.color = self.random_color()
         self.radius = 5
 
