@@ -1,16 +1,12 @@
 import pygame, sys
 from pygame.locals import *
+from player import Player
+from setup import *
+from enemy import * 
 
 pygame.init()
 
-screen_width = 1000
-screen_height = 650
 
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Fossil Legacy')
-
-#define game variable
-tile_size = 50
 
 #load images 
 sun_img = pygame.image.load('ch10\game\img\sun.png')
@@ -18,17 +14,18 @@ sky_img = pygame.image.load('ch10\game\img\sky.png')
 scaled_sky = pygame.transform.scale(sky_img, (screen_width, screen_height))
 scaled_sun = pygame.transform.scale(sun_img, (200, 200))
 
-def draw_grid():
-    for line in range (0,20):
-        pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
-        pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, screen_height))
+# def draw_grid():
+#     for line in range (0,20):
+#         pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
+#         pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, screen_height))
+
 
 
 class World():
     def __init__(self, data):
         self.tile_list = []
         
-        #load image
+        #load images
         dirt_img = pygame.image.load('ch10\game\img\dirt.png')
         grass_img = pygame.image.load('ch10\game\img\grass.png')
 
@@ -50,12 +47,20 @@ class World():
                     img_rect.y = row_count * tile_size
                     tile = (img, img_rect)
                     self.tile_list.append(tile)
+                if tile == 3:
+                    enemy = Enemy(col_count * tile_size, row_count * tile_size -30 )
+                    enemy_group.add(enemy)
+                if tile ==6:
+                    pass
+                    
+
                 col_count += 1
             row_count += 1
             
     def draw(self):
          for tile in self.tile_list:
             screen.blit(tile[0], tile[1])
+            pygame.draw.rect(screen, (255,255,255), tile[1], 1)
             
 
 
@@ -82,17 +87,28 @@ world_data = [
 [1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
+player = Player(100, screen_height - 130)
+
+
+enemy_group = pygame.sprite.Group()
 
 world = World(world_data)
 
 run = True
 while run:
-	
+
+    clock.tick(fps)
     screen.blit(scaled_sky, (0,0))
     screen.blit(scaled_sun, (100,20))
 
     world.draw()
-    draw_grid()
+
+    enemy_group.update()
+    enemy_group.draw(screen)
+
+    player.update()
+
+   # draw_grid()
 
     
 
