@@ -189,11 +189,13 @@ class Player():
 			#check for collision with enemies
 			if pygame.sprite.spritecollide(self, blob_group, False):
 				game_over = -1
+				pygame.mixer.music.stop()
 				game_over_fx.play()
 
 			#check for collision with lava
 			if pygame.sprite.spritecollide(self, lava_group, False):
 				game_over = -1
+				pygame.mixer.music.stop()
 				game_over_fx.play()
 
 			#check for collision with exit
@@ -245,8 +247,8 @@ class Player():
 		self.index = 0
 		self.counter = 0
 		for num in range(1, 5):
-			img_right = pygame.image.load('ch10\game\img\guy1.png')
-			img_right = pygame.transform.scale(img_right, (25, 30))
+			img_right = pygame.image.load(f'ch10\game\img\guy{num}.png')
+			img_right = pygame.transform.scale(img_right, (40, 60))
 			img_left = pygame.transform.flip(img_right, True, False)
 			self.images_right.append(img_right)
 			self.images_left.append(img_left)
@@ -325,7 +327,7 @@ class Enemy(pygame.sprite.Sprite):
 		self.image = pygame.image.load('ch10\game\img\pblob.png')
 		self.rect = self.image.get_rect()
 		self.rect.x = x
-		self.rect.y = y
+		self.rect.y = y -20
 		self.move_direction = 1
 		self.move_counter = 0
 
@@ -399,7 +401,7 @@ class Coin(pygame.sprite.Sprite):
 	def __init__(self, x, y):
 		pygame.sprite.Sprite.__init__(self)
 		img = pygame.image.load('ch10\game\img\coin.png')
-		self.image = pygame.transform.scale(img, (tile_size // 2, tile_size // 2))
+		self.image = pygame.transform.scale(img, (tile_size, tile_size)) # // 2, tile_size // 2))
 		self.rect = self.image.get_rect()
 		self.rect.center = (x, y)
 
