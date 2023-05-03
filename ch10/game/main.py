@@ -16,7 +16,7 @@ screen_height = 1000
 
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-pygame.display.set_caption('Platformer')
+pygame.display.set_caption('Ramen Rumble')
 
 
 #define font
