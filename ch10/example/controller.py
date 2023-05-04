@@ -41,15 +41,6 @@ class Controller:
         self.score = 0
         self.main_menu = True
 
-        # Load in level data and create world
-        if path.exists(f'ch10/game/levels/level{self.level}_data'):
-            pickle_in = open(f'ch10/game/levels/level{self.level}_data', 'rb')
-            world_data = pickle.load(pickle_in)
-        self.world = World(world_data, self.tile_size)
-
-        # Load a player
-        self.player = Player(100, self.screen_height - 130)
-
         # Create empty sprite groups for all models you need to draw
         self.blob_group = pygame.sprite.Group()
         self.platform_group = pygame.sprite.Group()
@@ -58,7 +49,7 @@ class Controller:
         self.exit_group = pygame.sprite.Group()
 
         #create dummy coin for showing the score
-        score_coin = Coin(self.tile_size // 2, self.tile_size // 2)
+        score_coin = Coin(self.tile_size // 2, self.tile_size // 2, self.tile_size)
         self.coin_group.add(score_coin)
 
 
@@ -72,13 +63,26 @@ class Controller:
         self.game_over_fx = pygame.mixer.Sound('ch10/game/sounds/img_game_over.wav')
         self.game_over_fx.set_volume(0.5)
 
-        # Create buttons
+        # Load images
         start_img = pygame.image.load('ch10/game/img/start_btn.png')
         exit_img = pygame.image.load('ch10/game/img/exit_btn.png')
         restart_img = pygame.image.load('ch10/game/img/restart_btn.png')
+        self.sun_img = pygame.image.load('ch10/game/img/sun.png')
+        self.bg_img = pygame.image.load('ch10/game/img/sky.png')
+
+        # Create buttons
         self.start_button = Button(self.screen_width // 2 - 350, self.screen_height // 2, start_img)
         self.exit_button = Button(self.screen_width // 2 + 150, self.screen_height // 2, exit_img)
         self.restart_button = Button(self.screen_width // 2 - 50, self.screen_height // 2 + 100, restart_img)
+
+        # Load a player
+        self.player = Player(100, self.screen_height - 130)
+
+        # Load in level data and create world
+        if path.exists(f'ch10/game/levels/level{self.level}_data'):
+            pickle_in = open(f'ch10/game/levels/level{self.level}_data', 'rb')
+            world_data = pickle.load(pickle_in)
+        self.world = World(world_data, self.tile_size, self.blob_group, self.platform_group, self.lava_group, self.coin_group, self.exit_group)
 
 
     def game_loop(self):
@@ -95,9 +99,13 @@ class Controller:
         # 8. Collision with enemies
         # 9. Collision with world boundaries
         while self.state == "GAME":
-            self.world.draw()
 
-            if game_over == 0:
+            self.clock.tick(self.fps)
+            self.screen.blit(self.bg_img, (0, 0))
+            self.screen.blit(self.sun_img, (100, 100))
+            self.world.draw(self.screen)
+
+            if self.game_over == 0:
                 self.blob_group.update()
                 self.platform_group.update()
                 #update score
@@ -113,14 +121,16 @@ class Controller:
             self.coin_group.draw(self.screen)
             self.exit_group.draw(self.screen)
 
-            game_over = self.player.update(game_over)
+            self.game_over = self.player.update(self.game_over, self.world, self.blob_group,
+                                                self.lava_group, self.exit_group, self.coin_group,
+                                                self.platform_group, self.screen_width, self.screen_height,
+                                                self.game_over_fx, self.font, self.draw_text, self.screen)
 
             #if player has died
-            if game_over == -1:
+            if self.game_over == -1:
                 if self.restart_button.draw():
-                    world_data = []
-                    world = reset_level(level)
-                    game_over = 0
+                    self.world = self.reset_level(level)
+                    self.game_over = 0
                     #score = 0
                     self.game_over_fx.stop()
                     pygame.mixer.music.load('ch10/game/sounds/music.wav')
@@ -128,35 +138,31 @@ class Controller:
 
 
             #if player has completed the level
-            if game_over == 1:
+            if self.game_over == 1:
                 #reset game and go to next level
                 level += 1
-                if level <= max_levels:
+                if level <= self.max_levels:
                     #reset level
-                    world_data = []
-                    world = reset_level(level)
-                    game_over = 0
+                    self.world_data = []
+                    self.world = self.reset_level(level)
+                    self.game_over = 0
                 else:
-                    draw_text('YOU WIN!', font, blue, (screen_width // 2) - 140, screen_height // 2)
-                    if restart_button.draw():
+                    self.draw_text('YOU WIN!', self.font, BLUE, (self.screen_width // 2) - 140, self.screen_height // 2)
+                    if self.restart_button.draw():
                         level = 1
                         #reset level
-                        world_data = []
-                        world = reset_level(level)
-                        game_over = 0
+                        self.world_data = []
+                        self.world = self.reset_level(level)
+                        self.game_over = 0
                         #score = 0
+
+            pygame.display.flip()
 
 
     def start_menu(self):
         """
         Display a start menu for the game.
         """
-        sun_img = pygame.image.load('ch10/game/img/sun.png')
-        bg_img = pygame.image.load('ch10/game/img/sky.png')
-
-        self.clock.tick(self.fps)
-        self.screen.blit(bg_img, (0, 0))
-        self.screen.blit(sun_img, (100, 100))
 
         # Check for events
         # You are at the start menu, so you only need to check for the mouse click
@@ -164,15 +170,20 @@ class Controller:
         # If the start button is clicked, call the start_game() method.
         # If the exit button is clicked, set the state to "QUIT" to exit the game.
         while self.state == "START":
+
+            self.clock.tick(self.fps)
+            self.screen.blit(self.bg_img, (0, 0))
+            self.screen.blit(self.sun_img, (100, 100))
+
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if start_button.rect.collidepoint(event.pos):
+                    if self.start_button.rect.collidepoint(event.pos):
                         self.start_game()
-                    elif exit_button.rect.collidepoint(event.pos):
+                    elif self.exit_button.rect.collidepoint(event.pos):
                         self.state = "QUIT"
 
-            start_button.draw(self.screen)
-            exit_button.draw(self.screen)
+            self.start_button.draw(self.screen)
+            self.exit_button.draw(self.screen)
 
             pygame.display.flip()
 
@@ -191,12 +202,12 @@ class Controller:
                 pygame.quit()
                 exit()
 
+            pygame.display.update()
 
     def start_game(self):
         self.state = "GAME"
 
-
-    def draw_text(self, text, text_col, x, y):
+    def draw_text(self, text, font, text_col, x, y):
         """
         Draw text onto the screen.
 
@@ -206,5 +217,26 @@ class Controller:
             x (_type_): position on the x-axis
             y (_type_): position on the y-axis
         """
-        img = self.font.render(text, True, text_col)
+        img = font.render(text, True, text_col)
         self.screen.blit(img, (x, y))
+
+
+
+    #function to reset level
+    def reset_level(self, level):
+        self.player.reset(100, self.screen_height - 130)
+        self.blob_group.empty()
+        self.platform_group.empty()
+        self.coin_group.empty()
+        self.lava_group.empty()
+        self.exit_group.empty()
+
+        #load in level data and create world
+        if path.exists(f'ch10/game/levels/level{level}_data'):
+            pickle_in = open(f'ch10/game/levels/level{level}_data', 'rb')
+            world_data = pickle.load(pickle_in)
+        world = World(world_data)
+        #create dummy coin for showing the score
+        score_coin = Coin(self.tile_size // 2, self.tile_size // 2)
+        self.coin_group.add(score_coin)
+        return world

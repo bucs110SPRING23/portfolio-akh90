@@ -3,7 +3,7 @@ import pygame
 class Player():
 	def __init__(self, x, y):
 		self.reset(x, y)
-		self.jump_fx = pygame.mixer.Sound('ch10\game\sounds\img_jump.wav')
+		self.jump_fx = pygame.mixer.Sound('ch10/game/sounds/img_jump.wav')
 		self.jump_fx.set_volume(0.5)
 
 
@@ -121,7 +121,7 @@ class Player():
 
 		elif game_over == -1:
 			self.image = self.dead_image
-			draw_text('GAME OVER!', font, blue, (screen_width // 2) - 200, screen_height // 2)
+			draw_text('GAME OVER!', font, (0, 0, 255), (screen_width // 2) - 200, screen_height // 2)
 			if self.rect.y > 200:
 				self.rect.y -= 5
 
@@ -137,12 +137,12 @@ class Player():
 		self.index = 0
 		self.counter = 0
 		for num in range(1, 5):
-			img_right = pygame.image.load(f'ch10\game\img\guy{num}.png')
+			img_right = pygame.image.load(f'ch10/game/img/guy{num}.png')
 			img_right = pygame.transform.scale(img_right, (30, 50))
 			img_left = pygame.transform.flip(img_right, True, False)
 			self.images_right.append(img_right)
 			self.images_left.append(img_left)
-		self.dead_image = pygame.image.load('ch10\game\img\ghost.png')
+		self.dead_image = pygame.image.load('ch10/game/img/ghost.png')
 		self.dead_image = pygame.transform.scale(self.dead_image, (40, 40))
 		self.image = self.images_right[self.index]
 		self.rect = self.image.get_rect()
