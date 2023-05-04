@@ -16,6 +16,7 @@ class Player():
 		if game_over == 0:
 			#get keypresses
 			key = pygame.key.get_pressed()
+
 			if key[pygame.K_SPACE] and self.jumped == False and self.in_air == False:
 				self.jump_fx.play()
 				self.vel_y = -15
@@ -38,6 +39,7 @@ class Player():
 				if self.direction == -1:
 					self.image = self.images_left[self.index]
 
+			print(key[pygame.K_SPACE], key[pygame.K_LEFT], key[pygame.K_RIGHT])
 
 			#handle animation
 			if self.counter > walk_cooldown:

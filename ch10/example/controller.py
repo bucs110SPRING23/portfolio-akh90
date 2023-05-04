@@ -115,16 +115,23 @@ class Controller:
                     self.coin_fx.play()
                 self.draw_text('X ' + str(self.score), self.font_score, WHITE, self.tile_size - 10, 10)
 
-            self.blob_group.draw(self.screen)
-            self.platform_group.draw(self.screen)
-            self.lava_group.draw(self.screen)
-            self.coin_group.draw(self.screen)
-            self.exit_group.draw(self.screen)
+                self.blob_group.draw(self.screen)
+                self.platform_group.draw(self.screen)
+                self.lava_group.draw(self.screen)
+                self.coin_group.draw(self.screen)
+                self.exit_group.draw(self.screen)
 
-            self.game_over = self.player.update(self.game_over, self.world, self.blob_group,
-                                                self.lava_group, self.exit_group, self.coin_group,
-                                                self.platform_group, self.screen_width, self.screen_height,
-                                                self.game_over_fx, self.font, self.draw_text, self.screen)
+                # TODO: You need to decompose the code below.
+                # The key handling code should be in this class, not in the player class.
+                # The player class should only be responsible for updating the player's position.
+                # In other words, self.player.update takes flags as arguments, and updates the player's position
+                # The render of the player should be done in this function.
+                # This thing can be said of the world-class as well.
+                # Please refer to the comment below the function definition.
+                self.game_over = self.player.update(self.game_over, self.world, self.blob_group,
+                                                    self.lava_group, self.exit_group, self.coin_group,
+                                                    self.platform_group, self.screen_width, self.screen_height,
+                                                    self.game_over_fx, self.font, self.draw_text, self.screen)
 
             #if player has died
             if self.game_over == -1:
