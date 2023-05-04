@@ -14,7 +14,6 @@ fps = 60
 screen_width = 1000
 screen_height = 1000
 
-
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
 pygame.display.set_caption('Ramen Rumble')
 
@@ -28,7 +27,7 @@ font_score = pygame.font.SysFont('Bauhaus 93', 30)
 tile_size = 50
 game_over = 0
 main_menu = True
-level = 3
+level = 1
 max_levels = 7
 score = 0
 
@@ -46,6 +45,7 @@ scaled_sun = pygame.transform.scale(sun_img, (200, 200))
 restart_img = pygame.image.load('ch10\game\img\estart_btn.png')
 start_img = pygame.image.load('ch10\game\img\start_btn.png')
 exit_img = pygame.image.load('ch10\game\img\exit_btn.png')
+
 
 #load sounds
 pygame.mixer.music.load('ch10\game\sounds\music.wav')
@@ -73,8 +73,8 @@ def reset_level(level):
 	exit_group.empty()
 
 	#load in level data and create world
-	if path.exists(f'level{level}_data'):
-		pickle_in = open(f'level{level}_data', 'rb')
+	if path.exists(f'ch10\game\levels\level{level}_data'):
+		pickle_in = open(f'ch10\game\levels\level{level}_data', 'rb')
 		world_data = pickle.load(pickle_in)
 	world = World(world_data)
 	#create dummy coin for showing the score
@@ -248,7 +248,7 @@ class Player():
 		self.counter = 0
 		for num in range(1, 5):
 			img_right = pygame.image.load(f'ch10\game\img\guy{num}.png')
-			img_right = pygame.transform.scale(img_right, (40, 60))
+			img_right = pygame.transform.scale(img_right, (30, 50))
 			img_left = pygame.transform.flip(img_right, True, False)
 			self.images_right.append(img_right)
 			self.images_left.append(img_left)
@@ -374,28 +374,7 @@ class Lava(pygame.sprite.Sprite):
 		self.rect.x = x
 		self.rect.y = y
 
-world_data = [
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 1], 
-[1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 2, 2, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 7, 0, 5, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 1], 
-[1, 7, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 7, 0, 0, 0, 0, 1], 
-[1, 0, 2, 0, 0, 7, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 0, 0, 2, 0, 0, 4, 0, 0, 0, 0, 3, 0, 0, 3, 0, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 7, 0, 0, 0, 0, 2, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 2, 2, 2, 2, 2, 1], 
-[1, 0, 0, 0, 0, 0, 2, 2, 2, 6, 6, 6, 6, 6, 1, 1, 1, 1, 1, 1], 
-[1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-[1, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-[1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
+
 
 class Coin(pygame.sprite.Sprite):
 	def __init__(self, x, y):
@@ -430,11 +409,10 @@ score_coin = Coin(tile_size // 2, tile_size // 2)
 coin_group.add(score_coin)
 
 #load in level data and create world
-if path.exists(f'level{level}_data'):
-	pickle_in = open(f'level{level}_data', 'rb')
+if path.exists(f'ch10\game\levels\level{level}_data'):
+	pickle_in = open(f'ch10\game\levels\level{level}_data', 'rb')
 	world_data = pickle.load(pickle_in)
 world = World(world_data)
-
 
 #create buttons
 restart_button = Button(screen_width // 2 - 50, screen_height // 2 + 100, restart_img)
@@ -482,7 +460,11 @@ while run:
 				world_data = []
 				world = reset_level(level)
 				game_over = 0
-				score = 0
+				#score = 0
+				game_over_fx.stop()
+				pygame.mixer.music.load('ch10\game\sounds\music.wav')
+				pygame.mixer.music.play(-1, 0.0, 5000)
+				
 
 		#if player has completed the level
 		if game_over == 1:
@@ -501,7 +483,7 @@ while run:
 					world_data = []
 					world = reset_level(level)
 					game_over = 0
-					score = 0
+					#score = 0
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
