@@ -89,6 +89,7 @@ class Controller:
 
 
     def game_loop(self):
+        
         # You are in the game loop, so you need to check for the following events:
         # This function should manage all the events that occur in the game loop.
         # You need to check for the following events:
@@ -167,7 +168,8 @@ class Controller:
                         #score = 0
 
 
-            
+                        
+
             pygame.display.flip()
 
 
@@ -252,4 +254,3 @@ class Controller:
         score_coin = Coin(self.tile_size // 2, self.tile_size // 2)
         self.coin_group.add(score_coin)
         return world
-

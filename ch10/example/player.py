@@ -1,7 +1,7 @@
 import pygame
 
 class Player():
-	def __init__(self, x, y):
+	def __init__(self, x, y ):
 		self.reset(x, y)
 		self.jump_fx = pygame.mixer.Sound('ch10/game/sounds/img_jump.wav')
 		self.jump_fx.set_volume(0.5)
@@ -13,6 +13,7 @@ class Player():
 		walk_cooldown = 5
 		col_thresh = 20
 		jump_fx = pygame.mixer.Sound('ch10/game/sounds/img_jump.wav') 
+		print(coin_group)
 
 		if game_over == 0:
 			#get keypresses
