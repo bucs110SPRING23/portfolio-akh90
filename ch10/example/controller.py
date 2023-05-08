@@ -13,6 +13,7 @@ from platform import Platform
 # Define colours
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
+pygame.display.set_caption('Ramen Rumble')
 
 class Controller:
     def __init__(self):
@@ -23,6 +24,8 @@ class Controller:
         self.screen_height = 1000
         self.screen = pygame.display.set_mode(size=(self.screen_width, self.screen_height))
         self.width, self.height = pygame.display.get_window_size()
+
+        
 
         # Set clock
         self.clock = pygame.time.Clock()
@@ -163,6 +166,8 @@ class Controller:
                         self.game_over = 0
                         #score = 0
 
+
+            
             pygame.display.flip()
 
 
@@ -247,3 +252,4 @@ class Controller:
         score_coin = Coin(self.tile_size // 2, self.tile_size // 2)
         self.coin_group.add(score_coin)
         return world
+

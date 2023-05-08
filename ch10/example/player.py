@@ -12,13 +12,13 @@ class Player():
 		dy = 0
 		walk_cooldown = 5
 		col_thresh = 20
+		jump_fx = pygame.mixer.Sound('ch10/game/sounds/img_jump.wav') 
 
 		if game_over == 0:
 			#get keypresses
 			key = pygame.key.get_pressed()
-
 			if key[pygame.K_SPACE] and self.jumped == False and self.in_air == False:
-				self.jump_fx.play()
+				jump_fx.play()
 				self.vel_y = -15
 				self.jumped = True
 			if key[pygame.K_SPACE] == False:
