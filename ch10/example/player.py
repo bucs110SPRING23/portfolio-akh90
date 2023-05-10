@@ -13,7 +13,7 @@ class Player():
 		walk_cooldown = 5
 		col_thresh = 20
 		jump_fx = pygame.mixer.Sound('ch10/game/sounds/img_jump.wav') 
-		print(coin_group)
+		#print(coin_group)
 
 		if game_over == 0:
 			#get keypresses
@@ -40,7 +40,7 @@ class Player():
 				if self.direction == -1:
 					self.image = self.images_left[self.index]
 
-			print(key[pygame.K_SPACE], key[pygame.K_LEFT], key[pygame.K_RIGHT])
+			#print(key[pygame.K_SPACE], key[pygame.K_LEFT], key[pygame.K_RIGHT])
 
 			#handle animation
 			if self.counter > walk_cooldown:
