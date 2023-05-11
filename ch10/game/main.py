@@ -3,6 +3,9 @@ from pygame.locals import *
 from pygame import mixer
 import pickle
 from os import path
+import requests 
+import json 
+import random 
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
 mixer.init()
@@ -15,7 +18,7 @@ screen_width = 1000
 screen_height = 1000
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
-pygame.display.set_caption('Ramen Rumble')
+pygame.display.set_caption('Paleozoic Park')
 
 
 #define font
@@ -76,6 +79,9 @@ def reset_level(level):
 	if path.exists(f'ch10\game\levels\level{level}_data'):
 		pickle_in = open(f'ch10\game\levels\level{level}_data', 'rb')
 		world_data = pickle.load(pickle_in)
+	#show random fact
+	
+
 	world = World(world_data)
 	#create dummy coin for showing the score
 	score_coin = Coin(tile_size // 2, tile_size // 2)
@@ -201,6 +207,7 @@ class Player():
 			#check for collision with exit
 			if pygame.sprite.spritecollide(self, exit_group, False):
 				game_over = 1
+				show_random_fact()
 
 
 			#check for collision with platforms
@@ -247,7 +254,7 @@ class Player():
 		self.index = 0
 		self.counter = 0
 		for num in range(1, 5):
-			img_right = pygame.image.load(f'ch10\game\img\guy{num}.png')
+			img_right = pygame.image.load(f'ch10\game\img\guyj{num}.png')
 			img_right = pygame.transform.scale(img_right, (30, 50))
 			img_left = pygame.transform.flip(img_right, True, False)
 			self.images_right.append(img_right)
@@ -294,7 +301,7 @@ class World():
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
 				if tile == 3:
-					blob = Enemy(col_count * tile_size, row_count * tile_size + 15)
+					blob = Enemy(col_count * tile_size, row_count * tile_size )
 					blob_group.add(blob)
 				if tile == 4:
 					platform = Platform(col_count * tile_size, row_count * tile_size, 1, 0)
@@ -380,9 +387,69 @@ class Coin(pygame.sprite.Sprite):
 	def __init__(self, x, y):
 		pygame.sprite.Sprite.__init__(self)
 		img = pygame.image.load('ch10\game\img\coin.png')
-		self.image = pygame.transform.scale(img, (tile_size, tile_size)) # // 2, tile_size // 2))
+		self.image = pygame.transform.scale(img, (tile_size // 1.5, tile_size // 1.5)) # // 2, tile_size // 2))
 		self.rect = self.image.get_rect()
 		self.rect.center = (x, y)
+
+
+
+
+
+
+
+def show_random_fact():
+    with open('ch10/game/facts.json', 'r') as f:
+        data = json.load(f)
+    
+    # Get a random fact from the list
+    fact = random.choice(data['facts'])
+    
+    popup_width = 400
+    popup_height = 200
+    
+    popup = pygame.Surface((popup_width, popup_height))
+    
+    # Define popup text and font
+    title = "Good Job! Did you know that..."
+    text = fact
+    font = pygame.font.SysFont('Calibri', 20)
+    
+    # Split the text into multiple lines if necessary
+    lines = []
+    line = ''
+    words = text.split()
+    for word in words:
+        new_line = line + ' ' + word
+        if font.size(new_line)[0] < popup_width - 20:
+            line = new_line
+        else:
+            lines.append(line)
+            line = word
+    lines.append(line)
+    
+    # Render the text onto the popup surface
+    y = 20
+    title_surface = font.render(title, True, (255, 215, 0, 255))
+    popup.blit(title_surface, (10, y))
+    y += title_surface.get_height() + 20
+    
+    for line in lines:
+        text_surface = font.render(line, True, (255, 215, 0, 255))
+        popup.blit(text_surface, (10, y))
+        y += text_surface.get_height() + 5
+    
+    # Draw the popup and update the screen
+    screen.blit(popup, ((screen_width - popup_width) / 2, (screen_height - popup_height) / 2))
+    pygame.display.update()
+
+
+
+    pygame.display.update()
+
+    # Wait for a short time to display the popup
+    pygame.time.delay(5000)
+	
+
 
 
 class Exit(pygame.sprite.Sprite):
