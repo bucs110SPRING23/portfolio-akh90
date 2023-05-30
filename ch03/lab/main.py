@@ -1,26 +1,70 @@
-import turtle #1. import modules
+import pygame
 import random
+import math 
 
-#Part A
-window = turtle.Screen() # 2.  Create a screen
-window.bgcolor('lightblue')
+pygame.init()
+screen = pygame.display.set_mode()
 
-michelangelo = turtle.Turtle() # 3.  Create two turtles
-leonardo = turtle.Turtle()
-michelangelo.color('orange')
-leonardo.color('blue')
-michelangelo.shape('turtle')
-leonardo.shape('turtle')
+dimensions = screen.get_size()
+print (dimensions)
+starting_point = [dimensions[0]-640, dimensions [1]-360]
 
-michelangelo.up() # 4. Pick up the pen so we don’t get lines
-leonardo.up()
-michelangelo.goto(-100,20)
-leonardo.goto(-100,-20)
+screen.fill ("cornflowerblue")
+pygame.display.flip()
+pygame.time.wait (1000)
 
-## 5. Your PART A code goes here
+#circle
+radius = 360
+pygame.draw.circle(screen, "coral1", starting_point, radius)
+pygame.draw.circle(screen, "black", starting_point, radius, width =3)
+pygame.display.flip()
+pygame.time.wait(500)
+
+#hori_line
+pygame.draw.line(screen, "black", ((dimensions[0]/2-360), (dimensions[1]/2)), ((dimensions[0]/2+360),(dimensions[1]/2)), width=2)
+pygame.display.flip()
 
 
-# PART B - complete part B here
+#vert_line
+pygame.draw.line(screen, "black", ((dimensions[0]/2), (0)), ((dimensions[0]/2),(dimensions[1])), width=2)
+pygame.display.flip()
+pygame.time.wait(1000)
+
+#part B
+x1 = 640
+y1 = 360
+x2 = random.randrange (0,1280)
+y2 = random.randrange (0,720)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+
+distance_from_center = math.hypot(x2-x1, y2-y1)  #the distance formula
+in_circle = distance_from_center <= dimensions[0]/2 #screen width
+
+#pygame.draw.circle (screen, "black", (x2, y2), 3)
+
+center = (dimensions [0] // 2, dimensions [1] // 2)
+numdarts = 10
+for i in range (numdarts):
+    x1 = 640
+    y1 = 360
+    x2 = random.randrange (0,1280)
+    y2 = random.randrange (0,720)
+    dot = (x2,y2)
+    if ((x2 - center[0])**2 + (y2 - center[1])**2)**0.5 <= 360:
+        color = BLACK
+    else:
+        color = RED
+    pygame.draw.circle(screen, color, dot, 10)
+
+    # Update the screen
+    pygame.display.update()
+
+    #if dot == in_circle:
+     #   pygame.draw.circle (screen, "black", (x2, y2), 5)
+    #else:
+     #   pygame.draw.circle (screen, "red", (x2, y2), 5)
 
 
-window.exitonclick()
+pygame.display.flip()
+pygame.time.wait(5000)
