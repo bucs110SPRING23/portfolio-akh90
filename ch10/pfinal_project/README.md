@@ -11,3 +11,7 @@ This program will execute a game in which the player will have a start menu, con
 -movable character
 -obstable collisions
 -character animation
+
+***resource(s)***
+-https://www.youtube.com/watch?v=AY9MnQ4x3zk&pp=ygULcHlnYW1lIGdhbWU%3D
+-https://www.youtube.com/watch?v=QU1pPzEGrqw&t=1611s&pp=ygULcHlnYW1lIGdhbWU%3D
